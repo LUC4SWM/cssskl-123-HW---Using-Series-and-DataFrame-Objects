@@ -45,6 +45,7 @@ print('*** Task 2 ***\nNumber in North America: ' + str(count_NA))
 
 # Task 3:
 print('\n*** Task 3 ***')
+
 # With explicit looping
 landmass_counts = {}  # Dictionary to hold count-values for each landmass
 for index, row in df_flag.iterrows():
@@ -57,7 +58,17 @@ print('Using explicit loops:')
 for landmass, count in sorted(landmass_counts.items()):
     print(landmass, '  ', count)
 
+# Without explicit looping
 print('\nWithout using explicit loops:\n' + str(df_flag.groupby('landmass')['name'].count()))
 
 # Task 4:
+print('\n*** Task 4 ***')
 
+print('Population (in millions) for speakers of each language: ')
+grouped_populations_by_language = df_flag.groupby('language')['population'].sum()
+print(grouped_populations_by_language.sort_values(ascending=False))
+
+# Summing only using countries with populations under 50 million
+filtered_df_flag = df_flag[df_flag['population'] < 50]
+grouped_filtered_populations_by_language = filtered_df_flag.groupby('language')['population'].sum()
+print('\nFiltered to only include countries with populations under 50 million:\n', grouped_filtered_populations_by_language.sort_values(ascending=False))
